@@ -1,11 +1,10 @@
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Expenses from './components/Expenses/Expenses';
 import NewExpense from './components/NewExpense/NewExpense';
 
-function App() {
-  
-const expenses = [
+const DUMMY_EXPENSES = [
   {
     id: 'e1',
     title: 'Toilet Paper',
@@ -27,23 +26,33 @@ const expenses = [
   },
 ];
 
+function App() {
+  
+  const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
+
+
+  const addExpenseHandler = expense => {
+
+    setExpenses(prevExpenses => {
+      return [expense, ...prevExpenses];
+    });
+  };
+
   return (
 
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         
-          <NewExpense />
-        
-
+          <NewExpense onAddExpense={addExpenseHandler}/>
           <Expenses items={expenses}/>
+
         <a
           className="App-link"
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
         </a>
       </header>
     </div>
